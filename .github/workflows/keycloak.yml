@@ -66,12 +66,6 @@ jobs:
       - name: available platforms
         run: echo ${{ steps.buildx.outputs.platforms }}
         
-      - name: Login to DockerHub
-        uses: docker/login-action@dd4fa0671be5250ee6f50aedf4cb05514abda2c7 # v1
-        with:
-          username: ${{ secrets._TEMP_DOCKERHUB_USER }}
-          password: ${{ secrets._TEMP_DOCKERHUB_PASSWORD }}
-        
       - name: build and push images
         run: |
           docker build --build-arg GIT_COMMIT=${{ github.sha }} --platform $PLATFORM $TAG .
