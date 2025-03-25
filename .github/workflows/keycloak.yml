@@ -68,7 +68,7 @@ jobs:
         
       - name: build and push images
         run: |
-          docker build --build-arg GIT_COMMIT=${{ github.sha }} --platform $PLATFORM $TAG .
+          docker build --build-arg GIT_COMMIT=${{ github.sha }} --load --platform $PLATFORM $TAG .
 
       - name: Scan keycloak docker image
         uses: anchore/scan-action@3343887d815d7b07465f6fdcd395bd66508d486a # v3
