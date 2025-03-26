@@ -30,10 +30,10 @@ jobs:
         run: |
           if [ -z "$TAG" ]; then
             echo "TAG=-t openremote/keycloak:develop" >> $GITHUB_ENV
-            echo "keycloakDockerImage=openremote/keycloak:develop" >> $GITHUB_ENV
+            echo "keycloakDockerImage=openremote/keycloak:develop" >> $GITHUB_OUTPUT
           else
             echo "TAG=-t openremote/keycloak:latest -t openremote/keycloak:$TAG" >> $GITHUB_ENV
-            echo "keycloakDockerImage=openremote/keycloak:$TAG" >> $GITHUB_ENV
+            echo "keycloakDockerImage=openremote/keycloak:$TAG" >> $GITHUB_OUTPUT
           fi
         env:
           TAG: ${{ github.event.release.tag_name }}
@@ -74,7 +74,7 @@ jobs:
         uses: anchore/scan-action@3343887d815d7b07465f6fdcd395bd66508d486a # v3
         id: keycloak-anchore-scan
         with:
-          image: 'bogusimage:latest'
+          image:  ${{ steps.set-tags.outputs.keycloakDockerImage }}
           fail-build: false
           severity-cutoff: critical
 
